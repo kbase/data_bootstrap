@@ -1,0 +1,41 @@
+{
+  "title": "Operational external data metadata schema",
+  "type" : "object",
+  "properties": {
+    
+    "runtime_data" : {
+      "type": { "enum": [ "true" ] },
+      "description": "This is a flag that says this data is runtime data",
+    },
+    "version": {
+      "type": "string",
+      "description": "This is the version defined by the external source"
+    },
+    "download_date": {
+      "type": "date",
+      "description": "This is the date the file was downloaded from the external source"
+    },
+    "origin_url": {
+      "type": "url",
+      "description": "This is the url of the location from which the data was downloaded"
+    },
+    "source_id": {
+      "type": "string",
+      "description": "Controlled CV identifier provided by the external source"
+    }
+    "type": {
+      "type": "string",
+      "description": “Controlled CV describing the scope/semantic of the data"
+    },
+    "description": {
+      "type": "string",
+      "description": "Long description of the data"
+    },
+    "citation": {
+      "type": "string",
+      "description": "This is a citation or doi"
+    }
+  }
+  "required" : ["runtime_data", "type" , "name" , "version" ]
+}
+
