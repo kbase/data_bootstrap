@@ -1,0 +1,8 @@
+{
+    "download_date": "21-NOV-2013", 
+    "long_description": "", 
+    "origin_url": "ftp://ftp.ccb.jhu.edu:21/pub/data/bowtie_indexes", 
+    "runtime_data": "true", 
+    "short_description": "Mouse bowtie version 1 index file", 
+    "version": "NCBI v37"
+}

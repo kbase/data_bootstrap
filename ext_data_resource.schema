@@ -1,0 +1,27 @@
+{
+    "title": "Operational external data metadata schema",
+    "properties": {
+        "runtime_data": {
+	    "description": "If runtime_data is true, then this data is third party runtime data",
+            "enum": ["true"]
+        },
+        "download_date": {
+            "description": "This is the date the file was downloaded from the external source", 
+            "type": "date"
+        }, 
+        "version": {
+            "description": "This is the version defined by the external source",
+            "type": "string"
+        },
+        "origin_url": {
+            "description": "This is the url of the location from which the data was downloaded",
+            "type": "url"
+        },
+        "short_description": {
+            "description": "Short description of the data"
+        },
+        "long_description": {
+            "description": "Long description of the data"
+        }
+    } 
+}
