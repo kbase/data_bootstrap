@@ -1,6 +1,6 @@
 How to develop installers in the data runtime.
 
-There are three general concepts to understand. The first is that data loaders are just like the software installers of the bootstrap module. The second is the creation of envirnomnent settings. The third is the version stamp that is placed on the data runtime. Each of these is described more below.
+There are three general concepts to understand. The first is that data installers are just like the software installers of the bootstrap module. The second is the creation of envirnomnent settings. The third is the version stamp that is placed on the data runtime. Each of these is described more below.
 
 Writing data installers - a data installer resides in a directory that represents the specific data to be installed. Naming conventions apply. The directory is named kb_<name> and the installer is named data.<name>.sh or data.<name>.pl depending on the language used to write the data installer.
 
@@ -14,8 +14,6 @@ An example: $dest = /mnt/druntime
 	The env directory contains a file bowtie1-env.sh
 	The contents of the bowtie1-env.sh file is
 		export BOWTIE_INDEXES=/mnt/druntime
-
-The script that contains the envornment settings is named according to the convention <name>-env.sh. The value of name is consistent between the kb_<name> directory, the data.<name>.sh installer script, and the <name>-env.sh.
 
 When writing a data installer, it is expected that the data to be installed has been uploaded into shock, and that the meta data that accompanies the data in shock conforms to the JSON schema that resides in the data_bootstrap module docs directory. Therefor, installers perform two basic functions, download data from shock and manage associated environment variables.
 
@@ -34,6 +32,16 @@ An example of managing the location of the data runtime in a shell script:
 	mkdir -p $target
 	mkdir -p $target/env
 
+All installers should write to the data runtime env directory the script that contains related environment variables. See the section below on environment settings for more detail. 
+
+An example of writing the environment file from within the installer scriptL
+
+	echo "
+	export REFDBPATH=$target:$REFDBPATH
+	export BOWTIE1_INDEXES=\$REFDBPATH
+	export BOWTIE_INDEXES=\$BOWTIE1_INDEXES
+
+	" > $target/env/bowtie1-env.sh
 
 Executing data installers can be performed in two ways. The first is to use the bootstrap_modules.pl program and a data dat file. The data dat file has the same format as the dat files used to construct the runtime, and the bootstrap_modules.pl program is basically the same as the bootstrap_modules.pl program in the boootstrap module.
 
@@ -43,8 +51,6 @@ What is important to remember is that the design of the data_bootstrap module fo
 
 The VERSION file is updated and copied to the installation directory everytime bootstrap_module is run. At the end of the exectuion of the bootsrap_modules.pl program, the latest git commit hash of the data_bootstrap repository in which the program is running is written to the VERSION file. That VERSION file is then copied to the data installation directory. This provides knowledge of what version of the data_bootstrap repository was used to build the data runtime. There are definitely flaws in this strategy, most notibly when data is added to the data runtime by manually executing the data installer scripts rather than using the bootstrap_modules.pl script.
 
-Finally, one needs to take come care when writing the env files. If an environment variable is being set that might already exist in the environment, then it is best to set the new value and append the old value therby keeping both. This strategy may change when we have a better understanding of how the environment scripts will be executed.
+Finally, one needs to take come care when writing the env files. If an environment variable is being set that might already exist in the environment, then it is best to set the new value and append the old value therby keeping both. This strategy may change when we have a better understanding of how the environment scripts will be executed. The script that contains the envornment settings is named according to the convention <name>-env.sh. The value of name is consistent between the kb_<name> directory, the data.<name>.sh installer script, and the <name>-env.sh. The script that contains the environment settings is written to the data runtime env directory by the data installer script.
 
 An example:  export REFDBPATH=/mnt/druntime:$REFDBPATH
-
-
