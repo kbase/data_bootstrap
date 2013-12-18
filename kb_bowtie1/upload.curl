@@ -1,3 +1,0 @@
-curl -X POST [ see Authentication ] [ -F "attributes=@<path_to_json>" ( -F "upload=@<path_to_data_file>" || -F "path=<path_to_file>") ] http://<host>[:<port>]/node
-
-curl -X POST -F "attributes=@" -F "upload=@"" http:///node
