@@ -1,2 +1,2 @@
-kb_m5nr		data.m5nr.clust.sh
-kb_bowtie1
+kb_m5nr		./data.m5nr.clust.sh
+kb_bowtie1	./data.bowtie1.sh
