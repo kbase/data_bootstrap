@@ -35,4 +35,7 @@ mv h_sapiens_asm.rev.2.ebwt $target/
 
 echo "
 export REFDBPATH=$target:$REFDBPATH
+export BOWTIE1_INDEXES=$target
+export BOWTIE_INDEXES=\$BOWTIE1_INDEXES
+
 " > $target/env/bowtie1-env.sh
