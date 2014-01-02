@@ -1,6 +1,6 @@
 #!/bin/bash
 
-target=${TARGET-/kb/runtime}
+target=${TARGET-/kb/data_runtime}
 
 if [[ $# -ne 0 ]] ; then
         target=$1
