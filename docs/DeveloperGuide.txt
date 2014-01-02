@@ -8,20 +8,20 @@ An example: kb_bowtie1/data.bowtie1.sh is the directory and installer that is re
 
 Each installer is responsible for writing an environment script to the $target/env directory. This environment script will set up any environment variables that are known to be relevant to that data.
 
-An example: $dest = /mnt/druntime
+An example: $dest = /mnt/data_runtime
 
-	The /mnt/druntime direcotry contains an env directory
+	The /mnt/data_runtime direcotry contains an env directory
 	The env directory contains a file bowtie1-env.sh
 	The contents of the bowtie1-env.sh file is
-		export BOWTIE_INDEXES=/mnt/druntime
+		export BOWTIE_INDEXES=/mnt/data_runtime
 
 When writing a data installer, it is expected that the data to be installed has been uploaded into shock, and that the meta data that accompanies the data in shock conforms to the JSON schema that resides in the data_bootstrap module docs directory. Therefor, installers perform two basic functions, download data from shock and manage associated environment variables.
 
-All insallers should follow the same pattern for locating the installation directory. The logic can be represented as if the TARGET environment variable is set, use that, otherwise use a hard coded default of /kb/druntime. Then, allow a user to override by passing to the script the location of the directory where the data will be installed.
+All insallers should follow the same pattern for locating the target installation directory. The logic can be represented as if the TARGET environment variable is set, use that, otherwise use a hard coded default of /kb/data_runtime. Then, allow a user to override by passing to the script the location of the directory where the data will be installed.
 
 An example of managing the location of the data runtime in a shell script:
 
-	target=${TARGET-/kb/runtime}
+	target=${TARGET-/kb/data_runtime}
 	if [[ $# -ne 0 ]] ; then
 	        target=$1
 	        shift
@@ -43,7 +43,7 @@ An example of writing the environment file from within the installer scriptL
 
 	" > $target/env/bowtie1-env.sh
 
-Executing data installers can be performed in two ways. The first is to use the bootstrap_modules.pl program and a data dat file. The data dat file has the same format as the dat files used to construct the runtime, and the bootstrap_modules.pl program is basically the same as the bootstrap_modules.pl program in the boootstrap module.
+Executing data installers can be performed in two ways. The first is to use the bootstrap_modules.pl program and a data dat file. The data dat file has the same format as the dat files used to construct the runtime (directory[tab]installscript[tab]args), and the bootstrap_modules.pl program is basically the same as the bootstrap_modules.pl program in the boootstrap module.
 
 The second way to execute an installer is to manually execute from within the directory where the script resides. The installer should always assume that it is being executed from within the directory that it resides.
 
@@ -53,4 +53,4 @@ The VERSION file is updated and copied to the installation directory everytime b
 
 Finally, one needs to take come care when writing the env files. If an environment variable is being set that might already exist in the environment, then it is best to set the new value and append the old value therby keeping both. This strategy may change when we have a better understanding of how the environment scripts will be executed. The script that contains the envornment settings is named according to the convention <name>-env.sh. The value of name is consistent between the kb_<name> directory, the data.<name>.sh installer script, and the <name>-env.sh. The script that contains the environment settings is written to the data runtime env directory by the data installer script.
 
-An example:  export REFDBPATH=/mnt/druntime:$REFDBPATH
+An example:  export REFDBPATH=/mnt/data_runtime:$REFDBPATH
