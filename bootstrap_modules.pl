@@ -110,7 +110,7 @@ for my $mod (@modules)
 }
 
 open (my $file, '>', 'VERSION');
-print $file `git log -n 1 --oneline --no-abbrev-commit`;
+print $file `git log -n 1 --oneline`;
 close $file;
 !system("cp", "VERSION",  $dest) or die "could not copy VERSION file to $dest";
 
